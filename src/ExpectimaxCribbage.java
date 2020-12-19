@@ -63,8 +63,8 @@ public class ExpectimaxCribbage implements CribbagePlayer {
             } else {
                 normals++;
             }
-            System.out.println("Fuckups: " + fuckups);
-            System.out.println("Normals: " + normals);
+            //System.out.println("Fuckups: " + fuckups);
+            //System.out.println("Normals: " + normals);
             actions.add(action);
         }
         // if any action was selected more than others, do it

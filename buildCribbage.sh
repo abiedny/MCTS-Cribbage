@@ -1,3 +1,3 @@
 rm -rf build/*
 cd src
-javac -d ../build Cribbage
+javac -d ../build Cribbage.java

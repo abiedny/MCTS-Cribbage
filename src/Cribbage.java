@@ -25,7 +25,7 @@ public class Cribbage implements CribbageUpdateable {
 		int[] maxNodes = {0};
 		int[] determinizations = {100}; //for DeterminizedUCTCribbage
 		
-		int numGames = 500; //make it even so that players have equal number of turns as first dealer
+		int numGames = 2; //make it even so that players have equal number of turns as first dealer
 		
 		for (double c : explorationConstant) {
 			for (int t : timeLimit) {
@@ -36,9 +36,9 @@ public class Cribbage implements CribbageUpdateable {
 						
 						//Edit the players below to run different tests
 						
-						//players[0] = new SingleObserverCribbage(c, t, n);
+						players[0] = new SingleObserverCribbage(c, t, n);
 						//players[0] = new ExpectimaxCribbage(5);
-						players[0] = new DeterminizedUCTCribbage(c, t, n, d);
+						//players[0] = new DeterminizedUCTCribbage(c, t, n, d);
 						//players[0] = new CheatingUCTCribbage(c, t, n);
 						
 						players[1] = new ScriptedCribbagePlayer();
@@ -51,6 +51,7 @@ public class Cribbage implements CribbageUpdateable {
 						
 						//match loop - plays numGames/2 of each player starting as dealer
 						int j = 0;
+						int totalMoves = 0;
 						int[] wins = {0, 0};
 						ArrayList<Integer[]> scores = new ArrayList<Integer[]>();
 						for (int i = 0; i < numGames; i++) {
@@ -67,8 +68,8 @@ public class Cribbage implements CribbageUpdateable {
 									}
 									else {
 										gameState.applyAction(players[(toMove + j)%2].getMove(gameState));
+										totalMoves++;
 									}
-									//TODO: We should also write scores and other metrics per turn/round out to JSON or CSV so we can plot it later
 								}
 							}
 							catch (Exception e) {
@@ -92,6 +93,7 @@ public class Cribbage implements CribbageUpdateable {
 						
 						//print results of numGames games with current settings:
 						System.out.println("Player 0: " + wins[0] + " wins, Player 1: " + wins[1] + " wins");
+						System.out.print("Total Moves: " + totalMoves);
 						Path file = Paths.get("/home/abied/Documents/Determinized_Scripted.csv");
 						ArrayList<String> lines = new ArrayList<String>();
 						lines.add(players[0].toString() + "," + players[1].toString());
